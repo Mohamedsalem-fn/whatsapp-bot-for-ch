@@ -1,0 +1,10 @@
+node_modules/
+.wwebjs_auth/
+auth_info_baileys/
+whatsapp_auth/
+*.log
+*.zip
+__pycache__/
+*.pyc
+temp_html/
+screenshots_bot/
