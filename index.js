@@ -5,6 +5,13 @@ import pino from 'pino';
 import axios from 'axios';
 import cron from 'node-cron';
 import moment from 'moment-timezone';
+import { execSync } from 'child_process';
+
+// 🧹 تنظيف أقفال الجلسة العالقة
+try {
+  execSync('find .wwebjs_auth/session -name "LOCK" -delete 2>/dev/null');
+} catch (e) { }
+
 
 
 
@@ -17,7 +24,7 @@ function clearScheduledJobs() {
 //////////-----------//////////
 async function fetchData() {
   try {
-    const response = await axios.get('https://frank0mm0m.serv00.net/api/azkar');
+    const response = await axios.get('https://eria.eu.cc/back/api/azkar/');
     const zekr = response.data['zekr'];
     const dua = response.data['dua'];
     return { zekr, dua };
@@ -48,7 +55,7 @@ const client = new Client({
   puppeteer: {
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    executablePath: process.env.CHROME_BIN || '/usr/bin/chromium-browser' // المسار الثابت على Ubuntu
+    executablePath: process.env.CHROME_BIN || '/snap/bin/chromium' || '/usr/bin/chromium-browser' // المسار الثابت على Ubuntu
   }
 });
 
@@ -68,7 +75,7 @@ client.on('disconnected', reason => {
   logger.warn('❌ تم قطع الاتصال، السبب:', reason);
 });
 
-const CHAT_ID = '120363400918914194@newsletter'; // معرف الدردشة الذي سيتم إرسال التذكيرات إليه
+const CHAT_ID = '120363405216072431@newsletter'; // معرف الدردشة الذي سيتم إرسال التذكيرات إليه
 
 // Function to fetch prayer times
 async function fetchPrayerTimes() {

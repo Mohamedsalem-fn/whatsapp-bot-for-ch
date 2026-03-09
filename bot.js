@@ -1,3 +1,4 @@
+//not used
 import pkg from 'whatsapp-web.js';
 const { Client, LocalAuth } = pkg;
 import qrcode from 'qrcode-terminal';
@@ -5,6 +6,13 @@ import pino from 'pino';
 import axios from 'axios';
 import cron from 'node-cron';
 import moment from 'moment-timezone';
+import { execSync } from 'child_process';
+
+// 🧹 تنظيف أقفال الجلسة العالقة
+try {
+  execSync('find .wwebjs_auth/session -name "LOCK" -delete 2>/dev/null');
+} catch (e) { }
+
 
 
 
@@ -48,7 +56,8 @@ const client = new Client({
   authStrategy: new LocalAuth(),
   puppeteer: {
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    executablePath: process.env.CHROME_BIN || '/snap/bin/chromium' || '/usr/bin/chromium-browser'
   }
 });
 
@@ -100,7 +109,7 @@ function schedulePrayerReminders(prayerTimes) {
     Asr: 'العصر',
     Maghrib: 'المغرب',
     Isha: 'العشاء',
-    Midnight:'القيام',
+    Midnight: 'القيام',
   };
 
   for (const prayer in prayers) {
