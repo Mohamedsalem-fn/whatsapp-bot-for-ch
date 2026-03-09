@@ -55,7 +55,7 @@ const client = new Client({
   puppeteer: {
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    executablePath: process.env.CHROME_BIN || '/snap/bin/chromium' || '/usr/bin/chromium-browser' // المسار الثابت على Ubuntu
+    executablePath: process.env.CHROME_BIN || undefined // سيتم استخدام المتصفح المدمج مع Puppeteer إذا لم يتم تحديد مسار
   }
 });
 
